@@ -11,7 +11,7 @@ docker_build(
     dockerfile='tilt/Dockerfile'
     )
 
-helm_repo(name='angledotdev', url='https://helm.angle.dev')
+helm_repo(name='angledotdev', url='https://helm.khulnasoft.com')
 helm_resource(
     name='angle',
     chart='angledotdev/angle',
