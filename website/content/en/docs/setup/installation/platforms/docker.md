@@ -1,0 +1,107 @@
+---
+title: Install Angle on Docker
+short: Docker
+weight: 1
+aliases: ["/docs/setup/installation/containers/docker"]
+---
+
+[Docker] is an open platform for developing, shipping, and running applications and services. With Docker, you can manage your infrastructure in the same ways you manage your services. By taking advantage of Docker's methodologies for shipping, testing, and deploying code quickly, you can significantly reduce the delay between writing code and running it in production. This page covers installing and managing Angle on the Docker platform.
+
+## Installation
+
+Pull the Angle image:
+
+```shell
+docker pull timberio/angle:{{< version >}}-debian
+```
+
+{{< success >}}
+Other available distributions (beyond `debian`):
+
+* `alpine`
+* `distroless-libc`
+* `distroless-static`
+{{< /success >}}
+
+## Deployment
+
+Angle is an end-to-end observability data pipeline designed to deploy under various roles. You mix and match these roles to create topologies. The intent is to make Angle as flexible as possible, allowing you to fluidly integrate Angle into your infrastructure over time. The deployment section demonstrates common Angle pipelines:
+
+{{< jump "/docs/setup/deployment/topologies" >}}
+
+## Administration
+
+### Configure
+
+Create a new Angle configuration. The below will output dummy logs to stdout.
+
+```shell
+cat <<-EOF > $PWD/angle.toml
+[api]
+enabled = true
+address = "0.0.0.0:8686"
+
+[sources.demo_logs]
+type = "demo_logs"
+interval = 1.0
+format = "json"
+
+[sinks.console]
+inputs = ["demo_logs"]
+target = "stdout"
+type = "console"
+encoding.codec = "json"
+EOF
+```
+
+### Start
+
+```shell
+docker run \
+  -d \
+  -v $PWD/angle.yaml:/etc/angle/angle.yaml:ro \
+  -p 8686:8686 \
+  timberio/angle:{{< version >}}-debian
+```
+
+Make sure to substitute out `debian` if you're using a different distribution.
+
+### Stop
+
+```shell
+docker stop timberio/angle
+```
+
+### Reload
+
+```shell
+docker kill --signal=HUP timberio/angle
+```
+
+### Restart
+
+```shell
+docker restart -f $(docker ps -aqf "name=angle")
+```
+
+### Observe
+
+To tail the logs from your Angle image:
+
+```shell
+docker logs -f $(docker ps -aqf "name=angle")
+```
+
+To access metrics from your Angle image:
+
+```shell
+angle top
+```
+
+### Uninstall
+
+```shell
+docker rm timberio/angle
+```
+
+[docker]: https://docker.com
