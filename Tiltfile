@@ -14,7 +14,7 @@ docker_build(
 helm_repo(name='angledotdev', url='https://helm.khulnasoft.com')
 helm_resource(
     name='angle',
-    chart='angledotdev/angle',
+    chart='khulnasoft/angle',
     image_deps=['timberio/angle'],
     image_keys=[('image.repository', 'image.tag')],
     flags=[
