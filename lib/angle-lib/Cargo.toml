@@ -1,0 +1,31 @@
+[package]
+name = "angle-lib"
+version = "0.1.0"
+authors = ["Angle Contributors <angle@datadoghq.com>"]
+edition = "2021"
+publish = false
+
+[dependencies]
+codecs = { path = "../codecs", default-features = false }
+enrichment = { path = "../enrichment" }
+file-source = { path = "../file-source", optional = true }
+opentelemetry-proto = { path = "../opentelemetry-proto", optional = true }
+prometheus-parser = { path = "../prometheus-parser", optional = true }
+angle-api-client = { path = "../angle-api-client", optional = true }
+angle-buffers = { path = "../angle-buffers", default-features = false }
+angle-common = { path = "../angle-common" }
+angle-config = { path = "../angle-config" }
+angle-core = { path = "../angle-core", default-features = false }
+angle-lookup = { path = "../angle-lookup", features = ["test"] }
+angle-stream = { path = "../angle-stream" }
+
+[features]
+api = ["angle-core/api"]
+api-client = ["dep:angle-api-client"]
+lua = ["angle-core/lua"]
+file-source = ["dep:file-source"]
+opentelemetry = ["dep:opentelemetry-proto"]
+prometheus = ["dep:prometheus-parser"]
+syslog = ["codecs/syslog"]
+test = ["angle-core/test"]
+vrl = ["angle-core/vrl"]

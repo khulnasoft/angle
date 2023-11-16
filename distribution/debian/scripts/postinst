@@ -1,0 +1,21 @@
+#!/bin/sh
+set -e
+
+# Add Angle to adm group to read /var/logs
+usermod --append --groups adm angle || true
+
+if getent group 'systemd-journal'
+then
+  # Add Angle to systemd-journal to read journald logs
+  usermod --append --groups systemd-journal angle || true
+  systemctl daemon-reload || true
+fi
+
+if getent group 'systemd-journal-remote'
+then
+  # Add Angle to systemd-journal-remote to read remote journald logs
+  usermod --append --groups systemd-journal-remote angle || true
+  systemctl daemon-reload || true
+fi
+
+#DEBHELPER#

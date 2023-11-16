@@ -1,0 +1,22 @@
+[Unit]
+Description=Angle
+Documentation=https://angle.khulnasoft.com
+After=network-online.target
+Requires=network-online.target
+
+[Service]
+User=angle
+Group=angle
+ExecStartPre=/usr/bin/angle validate
+ExecStart=/usr/bin/angle
+ExecReload=/usr/bin/angle validate
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=always
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+EnvironmentFile=-/etc/default/angle
+# Since systemd 229, should be in [Unit] but in order to support systemd <229,
+# it is also supported to have it here.
+StartLimitInterval=10
+StartLimitBurst=5
+[Install]
+WantedBy=multi-user.target

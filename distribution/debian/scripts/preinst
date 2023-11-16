@@ -1,0 +1,15 @@
+#!/bin/sh
+set -e
+
+# Add angle:angle user & group
+id --user angle >/dev/null 2>&1 || \
+  useradd --system --shell /sbin/nologin --home-dir /var/lib/angle --user-group \
+    --comment "Angle observability data router" angle
+
+# Create default Angle data directory
+mkdir -p /var/lib/angle
+
+# Make angle:angle the owner of the Angle data directory
+chown -R angle:angle /var/lib/angle
+
+#DEBHELPER#

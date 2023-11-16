@@ -1,0 +1,12 @@
+[package]
+name = "angle-vrl-cli"
+version = "0.1.0"
+authors = ["Angle Contributors <angle@datadoghq.com>"]
+edition = "2021"
+publish = false
+license = "MPL-2.0"
+
+[dependencies]
+clap = { version = "4.4.8", features = ["derive"] }
+angle-vrl-functions = { path = "../functions" }
+vrl.workspace = true

@@ -1,0 +1,4 @@
+# /etc/default/angle
+# This file can theoretically contain a bunch of environment variables
+# for Angle.  See https://angle.khulnasoft.com/docs/setup/configuration/#environment-variables
+# for details.
