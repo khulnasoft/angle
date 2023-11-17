@@ -1,6 +1,7 @@
 name: Protobuf Compatibility
 
 on:
+  workflow_dispatch:
   pull_request:
     paths:
         - "proto/**"
